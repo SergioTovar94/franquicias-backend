@@ -12,4 +12,7 @@ public interface FranquiciaRepositoryPort {
     Mono<Void> deleteById(Long id);
 
     Mono<Boolean> existsById(Long id);
+
+    Mono<Franquicia> findByNombre(String nombre);
+
 }

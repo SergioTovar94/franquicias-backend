@@ -39,4 +39,9 @@ public class FranquiciaRepositoryAdapter implements FranquiciaRepositoryPort {
         return franquiciaRepository.existsById(id);
     }
 
+    @Override
+    public Mono<Franquicia> findByNombre(String nombre) {
+        return franquiciaRepository.findByNombre(nombre).map(mapper::toDomain);
+    }
+
 }
