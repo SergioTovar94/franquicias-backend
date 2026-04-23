@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS franquicias (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sucursales (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    franquicia_id BIGINT NOT NULL,
+    FOREIGN KEY (franquicia_id) REFERENCES franquicias(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS productos (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    stock INTEGER NOT NULL,
+    sucursal_id BIGINT NOT NULL,
+    FOREIGN KEY (sucursal_id) REFERENCES sucursales(id) ON DELETE CASCADE
+);

@@ -5,3 +5,7 @@ spring:
     url: r2dbc:postgresql://ep-sparkling-hill-aj5sikgz-pooler.c-3.us-east-2.aws.neon.tech:5432/neondb?sslmode=require
     username: neondb_owner
     password: npg_ThLYseDuI02B
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
