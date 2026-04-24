@@ -2,6 +2,7 @@ package com.sergio.franquicias.domain.service;
 
 import org.springframework.stereotype.Component;
 
+import com.sergio.franquicias.domain.exception.RecursoDuplicadoException;
 import com.sergio.franquicias.domain.model.Franquicia;
 import com.sergio.franquicias.domain.repository.FranquiciaRepositoryPort;
 
@@ -19,7 +20,7 @@ public class FranquiciaService {
                 .hasElement()
                 .flatMap(existe -> {
                     if (existe) {
-                        return Mono.error(new IllegalArgumentException("Ya existe una franquicia con ese nombre"));
+                        return Mono.error(new RecursoDuplicadoException("una franquicia", franquicia.getNombre()));
                     }
                     return franquiciaRepositoryPort.save(franquicia);
                 });

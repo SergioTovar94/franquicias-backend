@@ -2,6 +2,7 @@ package com.sergio.franquicias.domain.service;
 
 import org.springframework.stereotype.Component;
 
+import com.sergio.franquicias.domain.exception.RecursoNoEncontradoException;
 import com.sergio.franquicias.domain.model.Producto;
 import com.sergio.franquicias.domain.repository.ProductoRepositoryPort;
 import com.sergio.franquicias.domain.repository.SucursalRepositoryPort;
@@ -20,10 +21,15 @@ public class ProductoService {
         return sucursalRepositoryPort.existsById(sucursalId)
                 .flatMap(existe -> {
                     if (!existe) {
-                        return Mono.error(new IllegalArgumentException("Sucursal no encontrada"));
+                        return Mono.error(new RecursoNoEncontradoException("Sucursal no encontrada"));
                     }
                     return productoRepositoryPort.save(producto, sucursalId);
                 });
+    }
+
+    public Mono<Producto> actualizarStock(Long productoId, Integer nuevoStock) {
+        return productoRepositoryPort.updateStock(productoId, nuevoStock)
+                .switchIfEmpty(Mono.error(new RecursoNoEncontradoException("Producto no encontrado")));
     }
 
     public Mono<Void> eliminar(Long productoId, Long sucursalId) {
@@ -36,14 +42,14 @@ public class ProductoService {
         return sucursalRepositoryPort.existsById(sucursalId)
                 .flatMap(existe -> existe
                         ? Mono.empty()
-                        : Mono.error(new IllegalArgumentException("Sucursal no encontrada")));
+                        : Mono.error(new RecursoNoEncontradoException("Sucursal no encontrada")));
     }
 
     private Mono<Void> validarProducto(Long productoId) {
         return sucursalRepositoryPort.existsById(productoId)
                 .flatMap(existe -> existe
                         ? Mono.empty()
-                        : Mono.error(new IllegalArgumentException("Producto no encontrado")));
+                        : Mono.error(new RecursoNoEncontradoException("Producto no encontrado")));
     }
 
 }

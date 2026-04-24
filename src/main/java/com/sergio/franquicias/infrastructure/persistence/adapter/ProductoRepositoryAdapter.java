@@ -38,4 +38,14 @@ public class ProductoRepositoryAdapter implements ProductoRepositoryPort {
     public Mono<Boolean> existsById(Long id) {
         return productoRepository.existsById(id);
     }
+
+    @Override
+    public Mono<Producto> updateStock(Long id, Integer nuevoStock) {
+        return productoRepository.findById(id)
+                .flatMap(entity -> {
+                    entity.setStock(nuevoStock);
+                    return productoRepository.save(entity);
+                })
+                .map(mapper::toDomain);
+    }
 }

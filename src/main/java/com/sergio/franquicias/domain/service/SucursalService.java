@@ -2,6 +2,7 @@ package com.sergio.franquicias.domain.service;
 
 import org.springframework.stereotype.Component;
 
+import com.sergio.franquicias.domain.exception.RecursoNoEncontradoException;
 import com.sergio.franquicias.domain.model.Sucursal;
 import com.sergio.franquicias.domain.repository.FranquiciaRepositoryPort;
 import com.sergio.franquicias.domain.repository.SucursalRepositoryPort;
@@ -20,7 +21,7 @@ public class SucursalService {
         return franquiciaRepositoryPort.existsById(franquiciaId)
                 .flatMap(existe -> {
                     if (!existe) {
-                        return Mono.error(new IllegalArgumentException("Franquicia no encontrada"));
+                        return Mono.error(new RecursoNoEncontradoException("Franquicia no encontrada"));
                     }
                     return sucursalRepositoryPort.save(sucursal, franquiciaId);
 

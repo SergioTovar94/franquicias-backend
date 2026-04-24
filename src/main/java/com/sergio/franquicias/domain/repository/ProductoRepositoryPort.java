@@ -12,4 +12,7 @@ public interface ProductoRepositoryPort {
     Mono<Void> deleteById(Long id);
 
     Mono<Boolean> existsById(Long id);
+
+    Mono<Producto> updateStock(Long id, Integer nuevoStock);
+
 }
