@@ -9,6 +9,7 @@ import com.sergio.franquicias.infrastructure.persistence.entity.ProductoEntity;
 import com.sergio.franquicias.infrastructure.persistence.repository.ProductoRepository;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -56,6 +57,11 @@ public class ProductoRepositoryAdapter implements ProductoRepositoryPort {
                     entity.setNombre(nuevoNombre);
                     return productoRepository.save(entity);
                 })
+                .map(mapper::toDomain);
+    }
+
+    public Flux<Producto> findBySucursalId(Long id) {
+        return productoRepository.findBySucursalId(id)
                 .map(mapper::toDomain);
     }
 }

@@ -2,6 +2,7 @@ package com.sergio.franquicias.domain.repository;
 
 import com.sergio.franquicias.domain.model.Producto;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ProductoRepositoryPort {
@@ -16,5 +17,7 @@ public interface ProductoRepositoryPort {
     Mono<Producto> updateStock(Long id, Integer nuevoStock);
 
     Mono<Producto> updateNombre(Long id, String nuevoNombre);
+
+    Flux<Producto> findBySucursalId(Long id);
 
 }

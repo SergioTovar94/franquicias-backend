@@ -9,6 +9,7 @@ import com.sergio.franquicias.infrastructure.persistence.entity.SucursalEntity;
 import com.sergio.franquicias.infrastructure.persistence.repository.SucursalRepository;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -46,6 +47,12 @@ public class SucursalRepositoryAdapter implements SucursalRepositoryPort {
                     entity.setNombre(nuevoNombre);
                     return sucursalRepository.save(entity);
                 })
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Flux<Sucursal> findByFranquiciaId(Long franquiciaId) {
+        return sucursalRepository.findByFranquiciaId(franquiciaId)
                 .map(mapper::toDomain);
     }
 }
