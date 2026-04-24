@@ -28,4 +28,9 @@ public class SucursalService {
                 });
     }
 
+    public Mono<Sucursal> actualizarNombre(Long id, String nuevoNombre) {
+        return sucursalRepositoryPort.updateNombre(id, nuevoNombre)
+                .switchIfEmpty(Mono.error(new RecursoNoEncontradoException("Sucursal no encontrado")));
+    }
+
 }

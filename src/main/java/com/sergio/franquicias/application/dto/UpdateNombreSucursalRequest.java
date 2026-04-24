@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UpdateNombreRequest {
+public class UpdateNombreSucursalRequest {
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 }

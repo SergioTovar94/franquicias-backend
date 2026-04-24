@@ -15,4 +15,6 @@ public interface FranquiciaRepositoryPort {
 
     Mono<Franquicia> findByNombre(String nombre);
 
+    Mono<Franquicia> updateNombre(Long id, String nuevoNombre);
+
 }

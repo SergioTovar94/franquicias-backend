@@ -48,4 +48,14 @@ public class ProductoRepositoryAdapter implements ProductoRepositoryPort {
                 })
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Mono<Producto> updateNombre(Long id, String nuevoNombre) {
+        return productoRepository.findById(id)
+                .flatMap(entity -> {
+                    entity.setNombre(nuevoNombre);
+                    return productoRepository.save(entity);
+                })
+                .map(mapper::toDomain);
+    }
 }

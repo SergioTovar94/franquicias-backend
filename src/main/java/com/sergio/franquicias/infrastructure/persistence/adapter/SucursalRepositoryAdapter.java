@@ -38,4 +38,14 @@ public class SucursalRepositoryAdapter implements SucursalRepositoryPort {
     public Mono<Boolean> existsById(Long id) {
         return sucursalRepository.existsById(id);
     }
+
+    @Override
+    public Mono<Sucursal> updateNombre(Long id, String nuevoNombre) {
+        return sucursalRepository.findById(id)
+                .flatMap(entity -> {
+                    entity.setNombre(nuevoNombre);
+                    return sucursalRepository.save(entity);
+                })
+                .map(mapper::toDomain);
+    }
 }

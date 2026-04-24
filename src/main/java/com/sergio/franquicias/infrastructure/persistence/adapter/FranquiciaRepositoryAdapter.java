@@ -44,4 +44,14 @@ public class FranquiciaRepositoryAdapter implements FranquiciaRepositoryPort {
         return franquiciaRepository.findByNombre(nombre).map(mapper::toDomain);
     }
 
+    @Override
+    public Mono<Franquicia> updateNombre(Long id, String nuevoNombre) {
+        return franquiciaRepository.findById(id)
+                .flatMap(entity -> {
+                    entity.setNombre(nuevoNombre);
+                    return franquiciaRepository.save(entity);
+                })
+                .map(mapper::toDomain);
+    }
+
 }

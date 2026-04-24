@@ -12,4 +12,6 @@ public interface SucursalRepositoryPort {
     Mono<Void> deleteById(Long id);
 
     Mono<Boolean> existsById(Long id);
+
+    Mono<Sucursal> updateNombre(Long id, String nuevoNombre);
 }

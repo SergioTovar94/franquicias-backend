@@ -1,12 +1,13 @@
 package com.sergio.franquicias.infrastructure.web.controller;
 
+import com.sergio.franquicias.application.usecase.ActualizarNombreProductoUseCase;
 import com.sergio.franquicias.application.usecase.ActualizarStockUseCase;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sergio.franquicias.application.dto.ProductoRequest;
 import com.sergio.franquicias.application.dto.ProductoResponse;
+import com.sergio.franquicias.application.dto.UpdateNombreProductoRequest;
 import com.sergio.franquicias.application.dto.UpdateStockRequest;
 import com.sergio.franquicias.application.usecase.AgregarProductoUseCase;
 import com.sergio.franquicias.application.usecase.EliminarProductoUseCase;
@@ -31,6 +32,7 @@ public class ProductoController {
         private final AgregarProductoUseCase agregarProductoUseCase;
         private final EliminarProductoUseCase eliminarProductoUseCase;
         private final ActualizarStockUseCase actualizarStockUseCase;
+        private final ActualizarNombreProductoUseCase actualizarNombreFranquiciaUseCase;
 
         @PostMapping
         public Mono<ResponseEntity<ProductoResponse>> agregar(
@@ -46,6 +48,15 @@ public class ProductoController {
                         @PathVariable Long productoId,
                         @Valid @RequestBody UpdateStockRequest request) {
                 return actualizarStockUseCase.actualizar(productoId, request)
+                                .map(ResponseEntity::ok);
+        }
+
+        @PatchMapping("/{productoId}/nombre")
+        public Mono<ResponseEntity<ProductoResponse>> actualizarNombre(
+                        @PathVariable Long sucursalId,
+                        @PathVariable Long productoId,
+                        @Valid @RequestBody UpdateNombreProductoRequest request) {
+                return actualizarNombreFranquiciaUseCase.actualizar(productoId, request)
                                 .map(ResponseEntity::ok);
         }
 

@@ -15,4 +15,6 @@ public interface ProductoRepositoryPort {
 
     Mono<Producto> updateStock(Long id, Integer nuevoStock);
 
+    Mono<Producto> updateNombre(Long id, String nuevoNombre);
+
 }

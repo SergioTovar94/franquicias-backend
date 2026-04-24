@@ -32,6 +32,11 @@ public class ProductoService {
                 .switchIfEmpty(Mono.error(new RecursoNoEncontradoException("Producto no encontrado")));
     }
 
+    public Mono<Producto> actualizarNombre(Long id, String nuevoNombre) {
+        return productoRepositoryPort.updateNombre(id, nuevoNombre)
+                .switchIfEmpty(Mono.error(new RecursoNoEncontradoException("Producto no encontrado")));
+    }
+
     public Mono<Void> eliminar(Long productoId, Long sucursalId) {
         return validarSucursal(sucursalId)
                 .then(validarProducto(productoId))
