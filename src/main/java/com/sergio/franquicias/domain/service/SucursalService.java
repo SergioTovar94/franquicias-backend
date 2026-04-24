@@ -20,7 +20,7 @@ public class SucursalService {
         return franquiciaRepositoryPort.existsById(franquiciaId)
                 .flatMap(existe -> {
                     if (!existe) {
-                        return Mono.error(new RuntimeException("Franquicia no encontrada"));
+                        return Mono.error(new IllegalArgumentException("Franquicia no encontrada"));
                     }
                     return sucursalRepositoryPort.save(sucursal, franquiciaId);
 

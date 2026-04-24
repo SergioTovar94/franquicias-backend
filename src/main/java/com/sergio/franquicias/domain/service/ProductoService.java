@@ -20,7 +20,7 @@ public class ProductoService {
         return sucursalRepositoryPort.existsById(sucursalId)
                 .flatMap(existe -> {
                     if (!existe) {
-                        return Mono.error(new RuntimeException("Sucursal no encontrada"));
+                        return Mono.error(new IllegalArgumentException("Sucursal no encontrada"));
                     }
                     return productoRepositoryPort.save(producto, sucursalId);
                 });
@@ -36,14 +36,14 @@ public class ProductoService {
         return sucursalRepositoryPort.existsById(sucursalId)
                 .flatMap(existe -> existe
                         ? Mono.empty()
-                        : Mono.error(new RuntimeException("Sucursal no encontrada")));
+                        : Mono.error(new IllegalArgumentException("Sucursal no encontrada")));
     }
 
     private Mono<Void> validarProducto(Long productoId) {
         return sucursalRepositoryPort.existsById(productoId)
                 .flatMap(existe -> existe
                         ? Mono.empty()
-                        : Mono.error(new RuntimeException("Producto no encontrado")));
+                        : Mono.error(new IllegalArgumentException("Producto no encontrado")));
     }
 
 }

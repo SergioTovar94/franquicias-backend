@@ -19,7 +19,7 @@ public class FranquiciaService {
                 .hasElement()
                 .flatMap(existe -> {
                     if (existe) {
-                        return Mono.error(new RuntimeException("Ya existe una franquicia con ese nombre"));
+                        return Mono.error(new IllegalArgumentException("Ya existe una franquicia con ese nombre"));
                     }
                     return franquiciaRepositoryPort.save(franquicia);
                 });
