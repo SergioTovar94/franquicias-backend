@@ -50,23 +50,13 @@ public class ProductoService {
     }
 
     public Mono<Void> eliminar(Long productoId, Long sucursalId) {
-        return validarSucursal(sucursalId)
-                .then(validarProducto(productoId))
-                .then(productoRepositoryPort.deleteById(productoId));
-    }
-
-    private Mono<Void> validarSucursal(Long sucursalId) {
         return sucursalRepositoryPort.existsById(sucursalId)
-                .flatMap(existe -> existe
-                        ? Mono.empty()
-                        : Mono.error(new RecursoNoEncontradoException("Sucursal no encontrada")));
-    }
-
-    private Mono<Void> validarProducto(Long productoId) {
-        return sucursalRepositoryPort.existsById(productoId)
-                .flatMap(existe -> existe
-                        ? Mono.empty()
-                        : Mono.error(new RecursoNoEncontradoException("Producto no encontrado")));
+                .filter(Boolean::booleanValue)
+                .switchIfEmpty(Mono.error(new RecursoNoEncontradoException("Sucursal no encontrada")))
+                .flatMap(ok -> productoRepositoryPort.existsById(productoId)
+                        .filter(Boolean::booleanValue)
+                        .switchIfEmpty(Mono.error(new RecursoNoEncontradoException("Producto no encontrado"))))
+                .flatMap(ok -> productoRepositoryPort.deleteById(productoId));
     }
 
 }
