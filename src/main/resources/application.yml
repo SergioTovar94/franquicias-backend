@@ -2,6 +2,10 @@ spring:
   application:
     name: franquicias
   r2dbc:
-    url: r2dbc:postgresql://ep-sparkling-hill-aj5sikgz-pooler.c-3.us-east-2.aws.neon.tech:5432/neondb?sslmode=require
-    username: neondb_owner
-    password: npg_ThLYseDuI02B
+    url: ${SPRING_R2DBC_URL:r2dbc:postgresql://localhost:5432/neondb}
+    username: ${SPRING_R2DBC_USERNAME:neondb_owner}
+    password: ${SPRING_R2DBC_PASSWORD:default}
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql

@@ -1,0 +1,289 @@
+{
+  "info": {
+    "_postman_id": "5c54aa91-d282-4ed4-a365-c9d5a107789c",
+    "name": "franquicias-api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50607756",
+    "_collection_link": "https://go.postman.co/collection/50607756-5c54aa91-d282-4ed4-a365-c9d5a107789c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "franquicias",
+      "item": [
+        {
+          "name": "cambiar_nombre",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\":\"Burguer King\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}franquicias/1/nombre",
+              "host": [
+                "{{base_url}}franquicias"
+              ],
+              "path": [
+                "1",
+                "nombre"
+              ]
+            },
+            "description": "# **Endpoint para Actualizar Nombre de Franquicia**\n\nEste request PATCH permite modificar el nombre de una franquicia específica identificada por su ID.\n\n## Propósito\n\nCambiar el nombre de una franquicia existente en el sistema.\n\n## Parámetros del Request\n\n- Parámetro de URL: ID de Franquicia (en este caso, '1')\n    \n- Parámetro de Body:\n    \n    - 'nombre': El nuevo nombre para la franquicia (en este ejemplo, 'Burguer Kings')\n        \n\n## Comportamiento Esperado\n\n- Actualiza exitosamente el nombre de la franquicia cuando el ID existe\n    \n- Devuelve los detalles actualizados de la franquicia o una confirmación de éxito\n    \n\n## Posibles Escenarios de Error\n\n- 404 No Encontrado: Si el ID de franquicia no existe\n    \n- 400 Solicitud Incorrecta: Si el formato del nombre no es válido"
+          },
+          "response": []
+        },
+        {
+          "name": "producto_max_stock",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}franquicias/2/producto-max-stock",
+              "host": [
+                "{{base_url}}franquicias"
+              ],
+              "path": [
+                "2",
+                "producto-max-stock"
+              ]
+            },
+            "description": "# Endpoint para Obtener el producto con más stock por sucursal para una franquicia.\n\nEste request GET permite obtener un listado de las sucursales y el producto con más stock de una franquicia específica identificada por su ID.\n\n---\n\n## Propósito\n\nConsultar la franquicia identificada por su ID y obtener un listado donde se muestra, por cada sucursal, el producto con mayor cantidad de stock.\n\n---\n\n## Parámetros del Request\n\n### Parámetro de URL\n\n- `franquiciaId` (Long)  \n    Identificador único de la franquicia (ejemplo: `1`)\n    \n\n---\n\n## Comportamiento esperado\n\n- Si la franquicia existe:\n    \n    - Se obtienen las sucursales asociadas a la franquicia\n        \n    - Para cada sucursal se calcula el producto con mayor stock\n        \n    - Se retorna una lista con:\n        \n        - nombre de la sucursal\n            \n        - nombre del producto con mayor stock\n            \n        - cantidad de stock\n            \n- Si una sucursal no tiene productos:\n    \n    - Esa sucursal no aparece en la respuesta\n        \n\n---\n\n## Posibles escenarios de error\n\n- **404 Not Found**\n    \n    - Si la franquicia con el ID proporcionado no existe\n        \n- **200 OK con lista vacía**\n    \n    - Si la franquicia existe pero no tiene sucursales o productos asociados\n        \n\n---\n\n## Ejemplo de respuesta\n\n\\`\\`\\`json  \n\\[  \n{  \n\"sucursal\": \"Burguer King - Soacha\",  \n\"producto\": \"Whopper\",  \n\"stock\": 25  \n},  \n{  \n\"sucursal\": \"Burguer King - Centro\",  \n\"producto\": \"Cheeseburger\",  \n\"stock\": 18  \n}  \n\\]"
+          },
+          "response": []
+        },
+        {
+          "name": "crear_franquicia",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\":\"\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}franquicias",
+              "host": [
+                "{{base_url}}franquicias"
+              ]
+            },
+            "description": "# Endpoint para crear una nueva franquicia en el sistema\n\n## Propósito:\n\nEste endpoint permite registrar una nueva franquicia en la base de datos del sistema.\n\n## Estructura del Cuerpo de la Solicitud:\n\n- nombre (string, requerido): Nombre oficial de la franquicia que se está registrando  \n    Ejemplo: \"KFC\", \"Burger King\", \"Starbucks\"\n    \n\n## Comportamiento Esperado:\n\n- Si la solicitud es válida:\n    \n    - Código de respuesta: 201 (Created)\n        \n    - Se crea un nuevo registro de franquicia en el sistema\n        \n    - Se devuelve la información completa del nuevo registro de franquicia\n        \n- Posibles Errores:\n    \n    - 400 (Bad Request):\n        \n        - Nombre de franquicia vacío\n            \n        - Nombre de franquicia ya existente\n            \n        - Formato de datos inválido\n            \n\nEjemplo de Solicitud Válida:  \n{  \n\"nombre\": \"KFC\"  \n}\n\nConsideraciones:\n\n- Asegurarse de proporcionar un nombre único"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "sucursales",
+      "item": [
+        {
+          "name": "agregar_sucursal_franquicia",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\":\"KFC - Teusaquillo\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}franquicias/2/sucursales",
+              "host": [
+                "{{base_url}}franquicias"
+              ],
+              "path": [
+                "2",
+                "sucursales"
+              ]
+            },
+            "description": "# Endpoint para agregar una nueva sucursal a una franquicia\n\nEste request POST recibe el ID de una franquicia y un JSON con el nombre de una sucursal y lo guarda .\n\n---\n\n## Comportamiento Esperado:\n\n- Si la solicitud es válida:\n    \n    - Código de respuesta: 201 (Created)\n        \n    - Se crea un nuevo registro de sucursal en el sistema\n        \n    - Se devuelve la información completa del nuevo registro de sucursal\n        \n- Posibles Errores:\n    \n    - 400 (Bad Request):\n        \n        - Nombre de sucursal vacío\n            \n        - Franquicia no existente\n            \n        - Formato de datos inválido"
+          },
+          "response": []
+        },
+        {
+          "name": "cambiar_nombre",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\":\"Burguer King - Bosa\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}franquicias/1/sucursales/2/nombre",
+              "host": [
+                "{{base_url}}franquicias"
+              ],
+              "path": [
+                "1",
+                "sucursales",
+                "2",
+                "nombre"
+              ]
+            },
+            "description": "# Endpoint para cambiar el nombre a una sucursal\n\nEste request PATCH recibe el id de una franquicia, el id de una sucursal y un JSON con el nuevo nombre que se le va a asignar a una sucursal.\n\n---\n\n## Comportamiento Esperado:\n\n- Actualiza exitosamente el nombre de la sucursal cuando el ID existe\n    \n- Devuelve los detalles actualizados de la franquicia o una confirmación de éxito"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "productos",
+      "item": [
+        {
+          "name": "agregar_producto_sucursal",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\":\"Kings Collection\",\r\n    \"stock\": 11\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}sucursales/4/productos",
+              "host": [
+                "{{base_url}}sucursales"
+              ],
+              "path": [
+                "4",
+                "productos"
+              ]
+            },
+            "description": "# Endpoint para agregar un producto con su stock a una sucursal\n\nEste request POST envía un id de sucursal y un JSON con el nombre y stock de un producto para asignarlo a una sucursal.\n\n---\n\n## Comportamiento Esperado:\n\n- Si la solicitud es válida:\n    \n    - Código de respuesta: 201 (Created)\n        \n    - Se crea un nuevo registro de producto en el sistema\n        \n    - Se devuelve la información completa del nuevo registro de producto\n        \n- Posibles Errores:\n    \n    - 400 (Bad Request):\n        \n        - Nombre de producto vacío\n            \n        - Sucursal no existente\n            \n        - Formato de datos inválido"
+          },
+          "response": []
+        },
+        {
+          "name": "modificar_stock",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"stock\": 25\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}sucursales/1/productos/3/stock",
+              "host": [
+                "{{base_url}}sucursales"
+              ],
+              "path": [
+                "1",
+                "productos",
+                "3",
+                "stock"
+              ]
+            },
+            "description": "# Endpoint para modificar el stock de un producto de una sucursal\n\nEste request PATCH recibe el id de una sucursal, id de un producto y un JSON con el valor del stock nuevo para modificar la sucursal.\n\n---\n\n## Comportamiento Esperado:\n\n- Actualiza exitosamente el stock del producto cuando el ID existe\n    \n- Devuelve los detalles actualizados de la franquicia o una confirmación de éxito"
+          },
+          "response": []
+        },
+        {
+          "name": "cambiar_nombre",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\":\"Kings Collection\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}sucursales/1/productos/3/nombre",
+              "host": [
+                "{{base_url}}sucursales"
+              ],
+              "path": [
+                "1",
+                "productos",
+                "3",
+                "nombre"
+              ]
+            },
+            "description": "# Endpoint para cambiar el nombre a un producto de una sucursal\n\nEste request PATCH recibe el id de una sucursal, id de un producto y un JSON con el nuevo nombre para modificar la sucursal.\n\n---\n\n## Comportamiento Esperado:\n\n- Actualiza exitosamente el nombre del producto cuando el ID existe\n    \n- Devuelve los detalles actualizados de la franquicia o una confirmación de éxito"
+          },
+          "response": []
+        },
+        {
+          "name": "eliminar_producto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\":\"Kings Collection\",\r\n    \"stock\": 10\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}sucursales/10/productos?productoId=2",
+              "host": [
+                "{{base_url}}sucursales"
+              ],
+              "path": [
+                "10",
+                "productos"
+              ],
+              "query": [
+                {
+                  "key": "productoId",
+                  "value": "2"
+                }
+              ]
+            },
+            "description": "# Endpoint para eliminar un producto específico de una sucursal.\n\nEscenarios de respuesta:\n\n1. Eliminación Exitosa (200 OK):\n    \n\n- Cuando el producto existe y se elimina correctamente\n    \n- Validaciones:\n    \n    - Verificar que el status code sea 200\n        \n    - Confirmar que el producto ya no existe en la base de datos\n        \n    - Validar que se haya eliminado solo el producto específico indicado\n        \n\n1. Producto No Encontrado (404 Not Found):\n    \n\n- Cuando el productoId no existe en la sucursal especificada\n    \n- Respuesta esperada: Mensaje de error indicando que el producto no se encontró"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
