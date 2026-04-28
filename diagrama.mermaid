@@ -16,7 +16,9 @@ graph TD
     end
 
     Infrastructure --> Application
-    Application --> Domaingraph TD
+    Application --> Domain
+    
+    graph TD
     subgraph Infrastructure
         Web[Controladores REST]
         RepoAdapter[Adaptadores Spring Data]
