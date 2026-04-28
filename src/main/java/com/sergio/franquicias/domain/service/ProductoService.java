@@ -1,23 +1,27 @@
 package com.sergio.franquicias.domain.service;
 
-import org.springframework.stereotype.Component;
-
 import com.sergio.franquicias.domain.exception.RecursoNoEncontradoException;
 import com.sergio.franquicias.domain.model.Producto;
 import com.sergio.franquicias.domain.model.ProductoSucursal;
 import com.sergio.franquicias.domain.repository.ProductoRepositoryPort;
 import com.sergio.franquicias.domain.repository.SucursalRepositoryPort;
 
-import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Component
-@RequiredArgsConstructor
 public class ProductoService {
 
     private final ProductoRepositoryPort productoRepositoryPort;
     private final SucursalRepositoryPort sucursalRepositoryPort;
+
+    public ProductoService(
+            ProductoRepositoryPort productoRepositoryPort,
+            SucursalRepositoryPort sucursalRepositoryPort) {
+
+        this.productoRepositoryPort = productoRepositoryPort;
+        this.sucursalRepositoryPort = sucursalRepositoryPort;
+
+    }
 
     public Mono<Producto> validarYGuardar(Producto producto, Long sucursalId) {
         return sucursalRepositoryPort.existsById(sucursalId)
