@@ -17,44 +17,4 @@ graph TD
 
     Infrastructure --> Application
     Application --> Domain
-    
-graph TD
-    subgraph Infrastructure
-        Web[Controladores REST]
-        RepoAdapter[Adaptadores Spring Data]
-    end
-
-    subgraph Application
-        UseCase[Casos de Uso]
-        MapperApp[Mappers]
-    end
-
-    subgraph Domain
-        Svc[Servicios de Dominio]
-        Port[Puertos de Repositorio]
-        Model[Entidades]
-    end
-
-    Infrastructure --> Application
-    Application --> Domain
-
-graph TD
-    subgraph Infrastructure
-        Web[Controladores REST]
-        RepoAdapter[Adaptadores Spring Data]
-    end
-
-    subgraph Application
-        UseCase[Casos de Uso]
-        MapperApp[Mappers]
-    end
-
-    subgraph Domain
-        Svc[Servicios de Dominio]
-        Port[Puertos de Repositorio]
-        Model[Entidades]
-    end
-
-    Infrastructure --> Application
-    Application --> Domain
     Web --> RepoAdapter
